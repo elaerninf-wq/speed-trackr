@@ -25,13 +25,13 @@ ChartJS.register(
 );
 
 interface SpeedGraphProps {
-  speedHistory: SpeedData[];
+  dataHistory: SpeedData[];
 }
 
-export const SpeedGraph: React.FC<SpeedGraphProps> = ({ speedHistory }) => {
+export const SpeedGraph: React.FC<SpeedGraphProps> = ({ dataHistory }) => {
   // Prepare data for Chart.js
-  const labels = speedHistory.map((_, index) => {
-    const secondsAgo = speedHistory.length - 1 - index;
+  const labels = dataHistory.map((_, index) => {
+    const secondsAgo = dataHistory.length - 1 - index;
     return secondsAgo === 0 ? 'Now' : `-${secondsAgo}s`;
   });
 
@@ -40,7 +40,7 @@ export const SpeedGraph: React.FC<SpeedGraphProps> = ({ speedHistory }) => {
     datasets: [
       {
         label: 'Speed (km/h)',
-        data: speedHistory.map(item => item.speed),
+        data: dataHistory.map(item => item.speed),
         borderColor: 'hsl(186 100% 50%)',
         backgroundColor: 'hsl(186 100% 50% / 0.1)',
         borderWidth: 3,
@@ -76,7 +76,7 @@ export const SpeedGraph: React.FC<SpeedGraphProps> = ({ speedHistory }) => {
         callbacks: {
           title: (context: any) => {
             const index = context[0].dataIndex;
-            const secondsAgo = speedHistory.length - 1 - index;
+            const secondsAgo = dataHistory.length - 1 - index;
             return secondsAgo === 0 ? 'Current Speed' : `${secondsAgo} seconds ago`;
           },
           label: (context: any) => `${context.parsed.y} km/h`,
@@ -119,7 +119,7 @@ export const SpeedGraph: React.FC<SpeedGraphProps> = ({ speedHistory }) => {
     },
   };
 
-  if (speedHistory.length === 0) {
+  if (dataHistory.length === 0) {
     return (
       <div className="h-64 flex items-center justify-center text-muted-foreground">
         <div className="text-center">

@@ -45,12 +45,22 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
-    /* Dashboard Specific Colors */
+    /* Automotive Dashboard Colors */
     --dashboard-glow: 186 100% 50%;
     --speedometer-bg: 218 23% 6%;
     --speedometer-needle: 0 85% 60%;
+    --rpm-needle: 45 100% 55%;
+    --fuel-needle: 120 100% 40%;
+    --fuel-low: 0 85% 60%;
     --success: 120 100% 40%;
     --warning: 45 100% 55%;
+    
+    /* Gauge Colors */
+    --gauge-green: 120 100% 40%;
+    --gauge-yellow: 45 100% 55%;
+    --gauge-red: 0 85% 60%;
+    --gauge-background: 218 23% 8%;
+    --gauge-text: 186 100% 94%;
     
     /* Gradients */
     --gradient-dashboard: linear-gradient(135deg, hsl(218 23% 5%), hsl(218 23% 8%));

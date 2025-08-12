@@ -69,6 +69,20 @@ export default {
 						needle: 'hsl(var(--speedometer-needle))'
 					}
 				},
+				gauge: {
+					background: 'hsl(var(--gauge-background))',
+					text: 'hsl(var(--gauge-text))',
+					green: 'hsl(var(--gauge-green))',
+					yellow: 'hsl(var(--gauge-yellow))',
+					red: 'hsl(var(--gauge-red))'
+				},
+				rpm: {
+					needle: 'hsl(var(--rpm-needle))'
+				},
+				fuel: {
+					needle: 'hsl(var(--fuel-needle))',
+					low: 'hsl(var(--fuel-low))'
+				},
 				success: 'hsl(var(--success))',
 				warning: 'hsl(var(--warning))'
 			},

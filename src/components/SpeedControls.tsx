@@ -6,10 +6,14 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 
 interface SpeedControlsProps {
-  onAccelerate: (amount?: number) => void;
-  onBrake: (amount?: number) => void;
+  onAccelerate: (amount: number) => void;
+  onBrake: (amount: number) => void;
   onEmergencyBrake: () => void;
-  currentSpeed: number;
+  vehicleData: {
+    speed: number;
+    rpm: number;
+    fuel: number;
+  };
   maxSpeed: number;
 }
 
@@ -17,7 +21,7 @@ export const SpeedControls: React.FC<SpeedControlsProps> = ({
   onAccelerate,
   onBrake,
   onEmergencyBrake,
-  currentSpeed,
+  vehicleData,
   maxSpeed,
 }) => {
   const [customAccelAmount, setCustomAccelAmount] = useState(10);
@@ -35,8 +39,9 @@ export const SpeedControls: React.FC<SpeedControlsProps> = ({
     }
   };
 
-  const isAtMaxSpeed = currentSpeed >= maxSpeed;
-  const isStopped = currentSpeed <= 0;
+  const isAtMaxSpeed = vehicleData.speed >= maxSpeed;
+  const isStopped = vehicleData.speed <= 0;
+  const isLowFuel = vehicleData.fuel < 5;
 
   return (
     <Card className="p-6 space-y-6">
@@ -47,13 +52,31 @@ export const SpeedControls: React.FC<SpeedControlsProps> = ({
         </p>
       </div>
 
+      {/* Vehicle Status Display */}
+      <div className="grid grid-cols-3 gap-2 text-center text-sm">
+        <div className="p-3 bg-card/50 rounded-lg">
+          <div className="text-primary font-bold text-lg">{vehicleData.speed.toFixed(0)}</div>
+          <div className="text-muted-foreground">km/h</div>
+        </div>
+        <div className="p-3 bg-card/50 rounded-lg">
+          <div className="text-rpm-needle font-bold text-lg">{Math.round(vehicleData.rpm).toLocaleString()}</div>
+          <div className="text-muted-foreground">RPM</div>
+        </div>
+        <div className="p-3 bg-card/50 rounded-lg">
+          <div className={`font-bold text-lg ${vehicleData.fuel < 20 ? 'text-fuel-low' : 'text-fuel-needle'}`}>
+            {vehicleData.fuel.toFixed(1)}%
+          </div>
+          <div className="text-muted-foreground">Fuel</div>
+        </div>
+      </div>
+
       {/* Quick Controls */}
       <div className="space-y-4">
         <h4 className="text-lg font-medium">Quick Actions</h4>
         <div className="flex flex-wrap gap-3">
           <Button
             onClick={() => onAccelerate(5)}
-            disabled={isAtMaxSpeed}
+            disabled={isAtMaxSpeed || isLowFuel}
             variant="default"
             className="flex-1 min-w-[120px] bg-success hover:bg-success/90 text-white"
           >
@@ -61,7 +84,7 @@ export const SpeedControls: React.FC<SpeedControlsProps> = ({
           </Button>
           <Button
             onClick={() => onAccelerate(10)}
-            disabled={isAtMaxSpeed}
+            disabled={isAtMaxSpeed || isLowFuel}
             variant="default"
             className="flex-1 min-w-[120px] bg-success hover:bg-success/90 text-white"
           >
@@ -107,7 +130,7 @@ export const SpeedControls: React.FC<SpeedControlsProps> = ({
               />
               <Button
                 onClick={handleCustomAccelerate}
-                disabled={isAtMaxSpeed || customAccelAmount <= 0}
+                disabled={isAtMaxSpeed || customAccelAmount <= 0 || isLowFuel}
                 className="px-6 bg-success hover:bg-success/90 text-white"
               >
                 Accelerate
@@ -168,6 +191,11 @@ export const SpeedControls: React.FC<SpeedControlsProps> = ({
         {isStopped && (
           <div className="text-center p-3 bg-muted/10 border border-muted/20 rounded-md">
             <p className="text-muted-foreground">🛑 Vehicle stopped</p>
+          </div>
+        )}
+        {isLowFuel && (
+          <div className="text-center p-3 bg-fuel-low/10 border border-fuel-low/20 rounded-md">
+            <p className="text-fuel-low font-medium">⛽ Low fuel - refuel required!</p>
           </div>
         )}
       </div>
