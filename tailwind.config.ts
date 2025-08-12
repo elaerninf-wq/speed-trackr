@@ -61,7 +61,29 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				dashboard: {
+					glow: 'hsl(var(--dashboard-glow))',
+					speedometer: {
+						bg: 'hsl(var(--speedometer-bg))',
+						needle: 'hsl(var(--speedometer-needle))'
+					}
+				},
+				success: 'hsl(var(--success))',
+				warning: 'hsl(var(--warning))'
+			},
+			backgroundImage: {
+				'gradient-dashboard': 'var(--gradient-dashboard)',
+				'gradient-speedometer': 'var(--gradient-speedometer)',
+				'gradient-glow': 'var(--gradient-glow)'
+			},
+			boxShadow: {
+				glow: 'var(--shadow-glow)',
+				panel: 'var(--shadow-panel)'
+			},
+			transitionTimingFunction: {
+				smooth: 'var(--transition-smooth)',
+				bounce: 'var(--transition-bounce)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
